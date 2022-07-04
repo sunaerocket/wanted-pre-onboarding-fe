@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Login = () => {
-  const [userId, setId] = useState(localStorage.getItem('user-id'));
-  const [userPassword, setPassword] = useState(
-    localStorage.getItem('user-password')
+  const [email, setEmail] = useState(localStorage.getItem('user-id') || '');
+  const [password, setPassword] = useState(
+    localStorage.getItem('user-password') || ''
   );
+  console.log(`이메일: ${email} 패스워드: ${password}`);
   const [emailValidity, setEmailValidity] = useState(true);
   const [passwordValidity, setPasswordValidity] = useState(true);
   const [isActiveButton, setIsActiveButton] = useState(false);
@@ -28,8 +29,8 @@ const Login = () => {
     password: '비밀번호',
   };
 
-  const storeUser = (id, password) => {
-    localStorage.setItem('user-id', id);
+  const storeUser = (email, password) => {
+    localStorage.setItem('user-id', email);
     localStorage.setItem('user-password', password);
   };
 
@@ -42,7 +43,7 @@ const Login = () => {
     if (isIdField) {
       const isValid = validator.email(value);
       setEmailValidity(isValid);
-      setId(value);
+      setEmail(value);
     }
 
     if (isPasswordField) {
@@ -52,7 +53,7 @@ const Login = () => {
     }
 
     const isValidUserInfo =
-      emailValidity && passwordValidity && userId !== '' && userPassword !== '';
+      emailValidity && passwordValidity && email !== '' && password !== '';
 
     if (isValidUserInfo) {
       setIsActiveButton(true);
@@ -72,7 +73,7 @@ const Login = () => {
       return;
     }
 
-    storeUser(userId, userPassword);
+    storeUser(email, password);
     location.assign('/main');
   };
 
@@ -96,7 +97,7 @@ const Login = () => {
               id="user-id"
               placeholder={placeholder.id}
               onChange={handleChange}
-              value={userId}
+              value={email}
               validity={emailValidity}
             />
           </Label>
@@ -106,7 +107,7 @@ const Login = () => {
               id="user-password"
               placeholder={placeholder.password}
               onChange={handleChange}
-              value={userPassword}
+              value={password}
               validity={passwordValidity}
             />
           </Label>
