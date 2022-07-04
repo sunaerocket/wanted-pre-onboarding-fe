@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import styled from 'styled-components';
 
 const Login = () => {
@@ -27,7 +28,7 @@ const Login = () => {
     password: '비밀번호',
   };
 
-  const storeUserData = (id, password) => {
+  const storeUser = (id, password) => {
     localStorage.setItem('user-id', id);
     localStorage.setItem('user-password', password);
   };
@@ -71,7 +72,7 @@ const Login = () => {
       return;
     }
 
-    storeUserData(userId, userPassword);
+    storeUser(userId, userPassword);
     location.assign('/main');
   };
 
